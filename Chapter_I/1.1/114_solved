@@ -1,0 +1,15 @@
+#lang sicp
+;;example of complex procedure
+
+(define (square x) (* x x))
+
+;;for example let's take [3x^2 + 4x + 5]
+;;D from 'Discriminant'
+(define (D a b c) (- (square b) (* 4 a c)))
+(D 3 4 5)
+
+(define (Vertex_of_parabola a b c) (/ (D a b c) (* 4 a -1)))
+(Xertex_of_parabola 3 4 5)
+
+(define (X_vertex a b c) (/ b (* b 2 -1)))
+(X_vertex 3 4 5)

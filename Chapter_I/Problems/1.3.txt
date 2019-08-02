@@ -1,0 +1,34 @@
+(define (square x) (* x x))
+(define (sum_of_squares x y) (+ (square x) (square y)))
+;;v2
+(define (max2 a b) (cond ((> a b) a)
+                         ((> b a) b)))
+(define (max3 a b c)
+        (cond ((> a b)
+               (sum_of_squares a (max2 b c)))
+        (cond ((> b a)
+               (sum_of_squares b (max2 a c))))))
+
+
+
+
+
+;;v3 Is it works? NOPE
+;;(define (max2 a b) (cond ((> a b) (define max a) (define min b) max)
+;;                         ((> b a) (define max b) (define min a) max)))
+;;(define (max3 a b c) ((max2 min c)
+;;                      (sum_of_squares (max2 a b) (max2 min c))))
+
+
+;;v1 if you are straight guy
+;;(define (max3 a b c )
+;;        (cond ((> a b)
+;;               (cond ((> b c) (sum_of_squares a b))
+;;                     ((< b c) (sum_of_squares a c))))
+;;              ((< a b) 
+;;               (cond ((> a c) (sum_of_squares a b))
+;;                     ((< a c) (sum_of_squares b c))))))
+
+
+
+;;it doesn't work if we have equal numbers :(

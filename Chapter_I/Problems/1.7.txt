@@ -1,0 +1,32 @@
+#lang sicp
+(define squared 76)              ;;your input
+
+;;support functions
+(define (abs a) (if (>= a 0) a (- 0 a)))          ;;|a|
+(define (square a) (* a a))                       ;;a^2
+(define (Newton_middle a b) (/ (+ a(/ b a))2))    ;;(a+b/a)/2
+(define (diff a b) (abs (- a b)))                 ;;|a-b|
+
+
+;;it's same as 117 but check-procedure is another
+;;Idea: if |r2-r1| < y% of r1  it's good enough  [where y is precision and r2 = (r1+r1/square)/2]
+
+(define (good_enough? root x) (< (diff (Newton_middle root x) root) 
+                                 (/ (* root 0.1) 
+                                    100)))
+
+(define (Newton_sqrt root x)                      ;;x is (square root)
+  (cond ((good_enough? root x) root)
+        (else (Newton_sqrt (Newton_middle root x) x))))
+
+ 
+(define (sqrt x)                                  ;;I used x/2 instead of 1.0
+  (Newton_sqrt (/ x 2) x)) 
+
+
+(sqrt squared)
+
+
+
+;;I think this versions is better for tiny numbers (because 0.1% of 0.0001 gives 1/10.000.000 delta which's really good accuracy)
+;;but worse for big numbers (because 0.1% of 1.000.000.000 gives 1.000.000 delta which's huge)

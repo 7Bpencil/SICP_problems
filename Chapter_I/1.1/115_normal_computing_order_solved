@@ -1,0 +1,17 @@
+;;I didn't write some steps like returning values because its boring
+;;I studied it in applicative example
+
+
+(Vertex_of_parabola 3 4 5)    ;;call procedure
+(/ (D a b c) (* 4 a -1)       ;;recover body of 'Vertex_of_parabola'
+(/ (D 3 4 5) (* 4 3 -1))      ;;fill arguments
+(/ (- (square b) (* 4 a c)) (* 4 3 -1))   ;;recover body of 'D'
+(/ (- (square 4) (* 4 3 5)) (* 4 3 -1))   ;;fill arg
+(/ (- (* x x) (* 4 3 5)) (* 4 3 -1))              ;;recover body of 'sqaure'
+(/ (- (* 4 4) (* 4 3 5)) (* 4 3 -1))              ;;fill arg
+
+;;reduction start
+
+(/ (- 16 60) -12) 
+(/ -44 -12)
+>3+2/3

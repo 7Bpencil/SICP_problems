@@ -1,0 +1,66 @@
+example from lesson 114
+
+1(Vertex_of_parabola 3 4 5)     ;;call procedure
+
+;;calc combination
+2 calc arg value [because arguments are primitive their value is actual numbers]
+;;apply procedure to arg:
+
+3 (/ (D a b c) (* 4 a -1))       ;;recover body of procedure
+4 (/ (D 3 4 5) (* 4 3 -1))       ;;fill operands with real arguments
+
+;;now interpreter must calc this combination
+
+5 calc arguments:
+
+;;at first it calc (D 3 4 5):
+6 calc arguments
+;;apply procedure to arg:
+
+7(- (square b) (* 4 a c))       ;;recover body of procedure
+8(- (square 4) (* 4 3 5))       ;;fill operands
+
+;; now we calc this combination
+
+
+;;calc two arguments:
+
+;;calc (square 4);
+9 calc argument
+;;apply procedure to arg
+
+10(* x x)                       ;;recover body of procedure
+11(* 4 4)                       ;;fill operands
+
+12 calc arguments
+13(* 4 4)-> 16                  ;;apply procedure to arg:
+14 return 16
+
+
+;;calc (* 4 3 5)
+
+15 calc arguments
+16(* 4 3 5)->60             ;;aplly procedure to arg
+17 return 60
+
+
+;;so we have:  (- 16 60)    [return to line 8]
+;;all arg are calced
+
+18 (- 16 60)-> -44        ;;apply procedure to arg
+19 return -44
+
+
+
+;;so we have: (/ -44 (* 4 3 -1))   [return to line 4] 
+;;now we calc second arg-combination:
+
+20 calc 4, 3 and  -1
+21 (* 4 3 -1)-> -12         ;;apply procedure
+22 return -12
+
+;;so we have (/ -44 -12)   [return to line 4]
+;;all values are calced
+
+23 (/ -44 -12)-> 3+2/3      ;;apply procedure
+24 return 3+2/3

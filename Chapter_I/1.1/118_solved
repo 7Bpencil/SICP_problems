@@ -1,0 +1,48 @@
+#lang sicp
+
+;;LET'S REWRITE ALL VERSIONS WITH BLOCK STRUCTURE!
+
+;;support functions
+(define (abs a) (if (>= a 0) a (- 0 a)))          ;;|a|
+(define (square a) (* a a))                       ;;a^2
+
+
+
+
+;;CUBIC ROOT (version which is better for little numbers)
+
+
+(define (cube_of x)                            
+  (define (Newton_middle a)              ;;(x/a^2 + 2*a)/3    where a is cubic root
+    (/ (+ (/ x (square a)) (* 2 a)) 3))        
+  (define (diff a b)                     ;;|a-b| 
+    (abs (- a b)))                            
+  (define (good_enough? cubic_root)                    ;;if |r2-r1| < y% of r1  it's good enough  [where y is precision and r2 = (r1+r1/square)/2]
+    (< (diff (Newton_middle cubic_root) cubic_root) 
+       (/ (* cubic_root 0.1) 
+          100)))
+  (define (Newton_cubic cubic_root)                    ;;if good enough returns answer, else calc more precise answer
+    (cond ((good_enough? cubic_root) cubic_root)
+          (else (Newton_cubic (Newton_middle cubic_root)))))
+  (Newton_cubic (/ x 10)))
+
+
+(cube_of 76)
+
+
+
+
+
+;;SQUARE ROOT (version which is better for big numbers)
+
+(define (sqrt_of x)
+  (define (Newton_middle a)                ;;(a+x/a)/2 where a is root 
+    (/ (+ a(/ x a))2))    ;;(a+x/a)/2                
+  (define (good_enough? root)              ;;if |root^2-x| < (precision delta) predicate returns true
+    (< (abs (- (square root) x)) 0.001))
+  (define (Newton_sqrt root)
+    (cond ((good_enough? root) root)
+          (else (Newton_sqrt (Newton_middle root)))))
+  (Newton_sqrt (/ x 2)))
+
+(sqrt_of 76)

@@ -1,0 +1,34 @@
+Code:
+(define (p) (p))      ;;it creates variable with name '(p)' with value '(p)'
+(define (test x y)    ;;if first arg = 0 return 0
+   (if (= x 0)        ;;else return second arg
+       0
+       y))
+(test 0 (p))     
+
+
+Applicative order:
+1 calc arguments:
+0->0, (p)->...        ;;interpreter can't calc (p) because: 
+                      ;;1 calculation of (p) return (p)
+                      ;;2 interpreter knows that (p) is name of variable and not primitive object
+                      ;;=>it tries to calc it
+                      ;;3 return to step 1
+;;it's the infinite loop
+;;interpeter will not print anything
+
+
+
+Normal order:
+1 recover body:
+(if (= x 0)
+    0
+    y)
+
+2 fill arguments:
+(if (= 0 0)
+    0
+    (p))
+
+3 calc combination:
+->0                   ;;interpreter just doesn't touch (p)

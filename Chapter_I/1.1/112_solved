@@ -1,0 +1,15 @@
+#lang sicp
+;;example of complex variable
+(define g 9.81)
+g
+
+(define floornum 16)
+floornum
+
+(define height (* 2.5 floornum))
+height
+
+(define time_square (/ (* 2
+                          height)
+                       g))
+time_square

@@ -1,0 +1,27 @@
+#lang sicp
+
+;;cubic root
+
+(define cube 76)              ;;your input
+
+;;support functions
+(define (abs a) (if (>= a 0) a (- 0 a)))          ;;|a|
+(define (square a) (* a a))                       ;;a^2
+(define (Newton_middle a b) (/ (+ (/ b (square a)) (* 2 a)) 3))    ;;(b/a^2 + 2*a)/3    where a is cubic root, b is cube 
+(define (diff a b) (abs (- a b)))                 ;;|a-b|
+
+
+(define (good_enough? cubic_root x) (< (diff (Newton_middle cubic_root x) cubic_root) 
+                                       (/ (* cubic_root 0.1) 
+                                          100)))
+
+(define (Newton_cubic cubic_root x)                      ;;x is (cube root)
+  (cond ((good_enough? cubic_root x) cubic_root)
+        (else (Newton_cubic (Newton_middle cubic_root x) x))))
+
+ 
+(define (cube_of x)                                  ;;I used x/10 instead of 1.0
+  (Newton_cubic (/ x 10) x)) 
+
+
+(cube_of cube)

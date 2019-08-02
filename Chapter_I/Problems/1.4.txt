@@ -1,0 +1,8 @@
+(define (a-plus-abs-b a b)
+        ((if (> b 0) + -) a b))  
+
+;;we should calc a+|b|
+;;if b>0 we calc a+(+b) = a+b
+;;if b<0 we clac a+(-b) = a-b
+
+;;it works because 'if' can return + or - in operator (because we can calc everything! oh boii)

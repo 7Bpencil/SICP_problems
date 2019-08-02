@@ -1,0 +1,25 @@
+#lang sicp
+(define squared 76)      ;;your input
+
+;;support functions
+(define (abs a) (if (>= a 0) a (- 0 a)))          ;;|a|
+(define (square a) (* a a))                       ;;a^2
+(define (Newton_middle a b) (/ (+ a(/ b a))2))    ;;(a+b/a)/2
+(define (diff a b) (abs (- a b)))                 ;;|a-b|
+(define (good_enough? root x) (< (diff (square root) x) 0.001))
+
+
+(define (Newton_sqrt root x)                       ;; x is (square root)
+  (cond ((good_enough? root x) root)
+        (else (Newton_sqrt (Newton_middle root x) x))))
+
+
+(define (sqrt x)                 ;;I used x/2 instead of 1.0
+  (Newton_sqrt (/ x 2) x)) 
+
+
+(sqrt squared)
+
+
+
+;;It's interesting that in LISP predicate is just a procedure that return true or false
