@@ -1,0 +1,57 @@
+(inc x) = x + 1
+(dec x) = x - 1
+
+#1 procedure:
+(define (+ a b)
+  (if (= a 0)
+      b
+      (inc (+ (dec a) b))))
+
+#2 procedure:
+(define (+ a b)
+  (if (= a 0)
+      b
+      (+ (dec a) (inc b))))
+
+
+
+
+LET'S CALC (+ 4 5) STEP BY STEP
+
+#1 procedure:
+->(if (= 4 0)
+      5
+      (inc (+ (dec 4) 5)))
+
+->(inc (+ (dec 4) 5))
+
+->(inc (if (= (dec 4) 0)          ;;(dec 4) is 3 and 3!=0
+           (dec 4)
+           (inc (+ (dec (dec 4)) 5))))
+
+->(inc 
+      (inc 
+          (+ (dec (dec 4)) 5)))     ;;and so on
+
+;;it's recursive process because interpreter must maintain all deffered operations (inc and dec)
+;;Without this information interpreter can't rightfully increment the return of deepest '+' procedure
+
+
+
+
+#2 procedure:
+->(if (= 4 0)
+      5
+      (+ (dec 4) (inc 5)))
+
+->(+ (dec 4) (inc 5))
+->(+ 3 6)
+->(if (= 3 0)
+      6
+      (+ (dec 3) (inc 6)))
+
+->(+ (dec 3) (inc 6))
+->(+ 2 7)         ;;and so on
+
+;;it's iterative process because interpretator doesn't maintain any informatio about previous steps. 
+;;Every step is fininshed
