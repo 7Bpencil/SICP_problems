@@ -1,0 +1,65 @@
+(define (expmod base exp m)
+ (cond ((= exp 0) 1)
+       ((even? exp)
+       (remainder (square (expmod base (/ exp 2) m))
+                  m))
+       (else (remainder (* base (expmod base (- exp 1) m)) 
+                        m))))
+ 
+;;original procedure from book                       
+;;------------------------------
+
+(define (fermat-test n)
+ (define (try-it a)
+   (= (expmod a n n) a))
+ (try-it (+ 1 (random (- n 1)))))
+
+(define (fast-prime? n times)
+ (cond ((= times 0) true)
+       ((fermat-test n) (fast-prime? n (- times 1)))
+       (else false)))
+
+
+;;original procedures from book
+;;------------------------------
+
+
+(define (timed-prime-test n times)
+ (newline)
+ (display n)
+ (start-prime-test n (runtime) times))
+ 
+(define (start-prime-test n start-time times)
+ (if (fast-prime? n times)
+     (report-prime (- (runtime) start-time))))
+
+(define (report-prime elapsed-time)
+ (display " *** ")
+ (display elapsed-time))
+
+
+;;changed testing procedure for fermat-test
+;;------------------------------
+
+;;We should deside how many times we would check number for prime
+;;let it be 10
+
+(timed-prime-test 1009 10)
+(timed-prime-test 1013 10)
+(timed-prime-test 1019 10)
+(timed-prime-test 10007 10)
+(timed-prime-test 10009 10)
+(timed-prime-test 10037 10)
+(timed-prime-test 100003 10)
+(timed-prime-test 100019 10)
+(timed-prime-test 100043 10)
+(timed-prime-test 1000003 10)
+(timed-prime-test 1000033 10)
+(timed-prime-test 1000037 10)
+
+----------------------------------------
+
+On my Core 2 Duo i got 47, 54, 65, 73 milliseconds
+We can expect that f(1,000,000) will be double longer than f(1000)
+ Because log(n^2) = 2log(n)
+TODO: describe

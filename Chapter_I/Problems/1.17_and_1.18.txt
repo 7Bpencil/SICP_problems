@@ -1,0 +1,56 @@
+(define (double n) (+ n n))
+(define (halve n) (/ n 2))  
+;;i know that multiplication and division aren't allowed
+
+(define (even? n)
+  (if (= (remainder n 2) 0)
+      true
+      false))
+
+;;supprot functions      
+;;----------------------------------
+
+1: Recursive version (like in book)
+(define (* a b)
+  (if (= b 0)
+      0
+      (+ a (* a (- b 1)))))
+
+a*5 (b=5):
+(+ a (+ a (+ a (+ a (+ a 0)))))
+
+
+
+2: Iterative version
+(define (* a b)
+  (define (iter b n)
+    (if (= b 0)
+        n
+        (iter (- b 1) (+ n a))))
+  (iter b 0))
+
+a*5: a+a+a+a+a
+
+
+
+3: Fast recursive version:
+(define (* a b)
+  (cond ((= b 0) 0)
+        ((even? b)
+         (double (* a (halve b))))
+        (else (+ a (* a (- b 1))))))
+
+a*25: (+ a (double (double (double (+ a (double (+ a 0)))))))
+
+
+
+4: Fast iterative version:
+(define (* b n)
+  (define (iter b n a)
+    (cond ((= n 1) (+ b a))
+          ((even? n)
+           (iter (double b) (halve n) a))
+          (else (iter b (- n 1) (+ b a)))))
+  (iter b n 0))
+
+just rewrite procedure from 1.16

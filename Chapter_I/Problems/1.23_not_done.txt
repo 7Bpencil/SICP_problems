@@ -1,0 +1,60 @@
+(define (prime? n)
+  (= n (smallest-divisor n)))
+
+(define (smallest-divisor n)
+  (define (find n test-divisor)
+    (cond ((> (square test-divisor) n) n)
+          ((divides? n test-divisor) test-divisor)
+          (else (find n (next test-divisor)))))
+  (find n 2))
+  
+(define (square x) (* x x))
+(define (divides? b a)
+  (= (remainder b a) 0))
+  
+(define (next n)
+  (if (= n 2)
+      3
+      (+ n 2)))
+      
+
+;;added "next" procedure
+;;-------------------------------
+
+(define (timed-prime-test n)
+ (newline)
+ (display n)
+ (start-prime-test n (runtime)))
+ 
+(define (start-prime-test n start-time)
+ (if (prime? n)
+     (report-prime (- (runtime) start-time))))
+
+(define (report-prime elapsed-time)
+ (display " *** ")
+ (display elapsed-time))
+ 
+ 
+;;original procedure from book
+;;-------------------------------
+
+(timed-prime-test 1009)
+(timed-prime-test 1013)
+(timed-prime-test 1019)
+(timed-prime-test 10007)
+(timed-prime-test 10009)
+(timed-prime-test 10037)
+(timed-prime-test 100003)
+(timed-prime-test 100019)
+(timed-prime-test 100043)
+(timed-prime-test 1000003)
+(timed-prime-test 1000033)
+(timed-prime-test 1000037)
+
+----------------------------------------
+
+On my Core 2 Duo i got 7-8, 15, 40, 115 milliseconds
+It's faster but it is not double faster
+V(before)/V(now) ~ 1.5 (except numbers around 1000, they aren't changed for some reason)
+
+TODO: why it's 1.5 indstead of 2

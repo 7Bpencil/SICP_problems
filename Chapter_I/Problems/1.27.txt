@@ -1,0 +1,33 @@
+(define (expmod base exp m)
+ (cond ((= exp 0) 1)
+       ((even? exp)
+       (remainder (square (expmod base (/ exp 2) m))
+                  m))
+       (else (remainder (* base (expmod base (- exp 1) m)) 
+                        m))))
+
+
+;;original procedure from book                        
+;;------------------------------
+
+(define (fermat-test n)
+ (define (try-it a)
+   (cond ((= a n) true)
+         ((= (expmod a n n) a) (try-it (+ a 1)))
+         (else false)))
+ (try-it 1))
+
+;;changed. now it checks every number      
+;;------------------------------      
+      
+(define (check-prime n)           ;;print procedure
+  (cond ((fermat-test n) (newline) (display "prime ") (display n))
+        (else (newline) (display "nope ") (display n))))
+        
+
+(check-prime 561)
+(check-prime 1105)
+(check-prime 1729)
+(check-prime 2465)
+(check-prime 2821)
+(check-prime 6601)

@@ -1,0 +1,38 @@
+(define (square n) (* n n))
+
+(define (even? n)
+  (if (= (remainder n 2) 0)
+      true
+      false))
+
+;;supprot functions      
+;;----------------------------------
+
+(define (f b n)
+  (define (f-iter b n a)
+    (cond ((= n 1) (* b a))
+          ((even? n)
+           (f-iter (square b) (/ n 2) a))
+          (else
+           (f-iter b (- n 1) (* b a)))))
+  (f-iter b n 1))
+
+;;----------------------------------
+
+b^14 for example:
+
+14 -> 7 -> 6 -> 3 -> 2 -> 1 this degree order is fastest
+
+b= b^14 —> (b^2)^7 —> (b^2)^6 —> (b^4)^3 —> (b^4)^2
+a= 1      1         b^2       b^2       b^2*b^4
+
+and answer is b*a
+
+
+we use 'a' as a bufer because we can't smoothly multiply if degree is not even.
+for example: (b^2)^7
+ we should go to degree 6 but how?
+ (b^2+1)^6? nope
+ (b^2)^6 * b^2? this way seems good but it's recursion,
+so we need to store somewhere our deferred operations,
+we store them in a.

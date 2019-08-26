@@ -13,9 +13,9 @@
 
 
 (define (cube_of x)                            
-  (define (Newton_middle a)              ;;(x/a^2 + 2*a)/3    where a is cubic root
+  (define (Newton_middle a)                            ;;(x/a^2 + 2*a)/3    where a is cubic root
     (/ (+ (/ x (square a)) (* 2 a)) 3))        
-  (define (diff a b)                     ;;|a-b| 
+  (define (diff a b)                                   ;;|a-b| 
     (abs (- a b)))                            
   (define (good_enough? cubic_root)                    ;;if |r2-r1| < y% of r1  it's good enough  [where y is precision and r2 = (r1+r1/square)/2]
     (< (diff (Newton_middle cubic_root) cubic_root) 
@@ -36,9 +36,9 @@
 ;;SQUARE ROOT (version which is better for big numbers)
 
 (define (sqrt_of x)
-  (define (Newton_middle a)                ;;(a+x/a)/2 where a is root 
+  (define (Newton_middle a)                        ;;(a+x/a)/2 where a is root 
     (/ (+ a(/ x a))2))    ;;(a+x/a)/2                
-  (define (good_enough? root)              ;;if |root^2-x| < (precision delta) predicate returns true
+  (define (good_enough? root)                      ;;if |root^2-x| < (precision delta) predicate returns true
     (< (abs (- (square root) x)) 0.001))
   (define (Newton_sqrt root)
     (cond ((good_enough? root) root)

@@ -1,0 +1,82 @@
+(define (prime? n)
+  (= n (smallest-divisor n)))
+
+(define (smallest-divisor n)
+  (define (square x) (* x x))
+  (define (divides? b a)
+    (= (remainder b a) 0))
+  (define (find n test-divisor)
+    (cond ((> (square test-divisor) n) n)
+          ((divides? n test-divisor) test-divisor)
+          (else (find n (+ test-divisor 1)))))
+  (find n 2))
+
+
+;;original procedures from book
+;;----------------------------------------
+
+
+(define (timed-prime-test n)
+ (newline)
+ (display n)
+ (start-prime-test n (runtime)))
+ 
+(define (start-prime-test n start-time)
+ (if (prime? n)
+     (report-prime (- (runtime) start-time))))
+
+(define (report-prime elapsed-time)
+ (display " *** ")
+ (display elapsed-time))
+
+
+;;original procedures from book
+;;----------------------------------------
+
+Let's look on what this procedures do:
+
+(timed-prime-test n)
+-print n
+-call procedure start-prime-test
+ and give it actual time
+
+
+(start-prime-test n start-time)
+-test n
+-if n is prime 
+ call procedure report-prime
+ and give it time that was spend
+ on calculations
+
+
+(report-prime elapsed-time)
+-print " *** " and elapsed time
+
+
+So we need just call (timed-prime-test n)
+And if n is prime we would get:
+"n *** time"
+
+----------------------------------------
+
+And procedure:
+
+(define (search-primes a b)
+  (define (even? n) (= (remainder n 2) 0))
+  (define (check-n n)
+    (cond ((> n b) (newline) (display 0))          ;;to sure that program stopped 
+          ((even? n) (check-n (+ n 1)))
+          (else (timed-prime-test n)
+                (check-n (+ n 2)))))
+  (check-n a))
+
+
+(search-primes 1000 1100)           ;;1009  1013  1019
+(search-primes 10000 10100)         ;;10007  10009  10037
+(search-primes 100000 100100)       ;;100,003  100,019  100,043
+(search-primes 1000000 1000100)     ;;1,000,003  1,000,033  1,000,037
+
+----------------------------------------
+On my Core 2 Duo i got 8-9, 21-24, 60-61, 181-185 milliseconds
+It's sligthly faster than n^(1/2)
+Whatever, it's quite accurate for every case

@@ -1,0 +1,33 @@
+(define (p x) (- (* 3 x) (* 4 (cube x))))
+(define (sine angle) 
+  (if (not (> (abs angle) 0.1)) 
+       angle 
+       (p (sine (/ angle 3.0)))))
+       
+Let's see:
+
+sine(12,15) -> p(12,15/3) -> p(4,05) -> (- (* 3 sine(4,05)) (* 4 (cube sine(4,05))))
+So each sine with angle>0,1 will call sine(angle/3) twice, so it's tree recursion 
+ tree will be symmetrical because every time we call same procedures
+
+So  R(n) = Θ(2^n) for calculations
+ imagine that we want sine(4,05) instead of sine(12,5)
+ it will reduce the half of tree
+And R(n) = Θ(n) for memory
+
+
+Each sine except last one call p(x)
+We know that R(n) = Θ(2^n)
+ it means that on depth n (if we count from zero)
+ there will be 2^n vertices on process graph
+So amount of calls is: 1+2+4+8+...+2^(n-1)
+ (n-1) because last sine doesn't call p(x)
+
+
+Our order:
+12,5 —> 4,05 —> 1,35 —> 0,45 —> 0,15 —> 0,05
+ sine(0,05) will return 0,05 and reduction will start.
+
+So in our case n=5
+and amount of calls is:
+1+2+4+8+16 = 31

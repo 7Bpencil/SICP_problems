@@ -1,0 +1,12 @@
+With (square x) we should evaluate x only once
+With (* x x) we should evaluate both arguments
+
+Originally in our case x is evaluated by procedure with R(n)=Θ(log(n))
+(expmod method is very similar to fast-exp procedure)
+
+But after Hugo's changes procedure becomes tree recursion.
+
+And we can find that if we double the size of the problem (6->12 for example)
+number of vertices (and operations) of the process' tree will be doubled too.
+
+So new procedure has R(n)=Θ(n)

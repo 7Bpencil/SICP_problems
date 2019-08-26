@@ -1,0 +1,72 @@
+(define (gcd a b)
+  (if (= b 0)
+      a
+      (gcd b (remainder a b))))
+
+
+
+
+'If' is a special form
+We have three parts here:
+1: (if (= b 0)
+2:     a
+3:     (gcd b (remainder a b))))
+
+if predicate is false second part isn't evaluated
+
+
+
+1:Applicative order
+
+Since arguments are evaluated before applying procedure gcd
+(and recovering the body of procedure)
+first and second part don't call remainder.
+
+So we have as many remainders as many gcd:
+gcd(206 40) ->
+->gcd(40 6)
+->gcd(6 4)
+->gcd(4 2)
+->gcd(2 2)
+->gcd(2 0)
+
+So it's only 5 calls (last gcd doesn't call remainder procedure)
+
+
+
+2:Normal order
+
+Firstly let's define some things:
+let be (remainder 206 40) = 6 = a1 because we have one remainder here
+let be (remainder 40 a1) = 4 = b2
+let be (remainder a1 b2) = 2 = c4
+let be (remainder b2 c4) = 2 = d7
+let be (remainder c4 d7) = 0 = e12
+
+Our order:
+gcd(206 40) ->
+->gcd(40 a1)
+->gcd(a1 b2)
+->gcd(b2 c4)
+->gcd(c4 d7)
+->gcd(d7 e12)
+
+Second part is evaluated only once
+and it's d7 (because it's an 'a' formal argument in last gcd)
+so here 7 remainders
+
+
+We evaluate first part in every gcd:
+->gcd(206 40) - 40
+->gcd(40 a1) - a1
+->gcd(a1 b2) - b2
+->gcd(b2 c4) - c4
+->gcd(c4 d7) - d7
+->gcd(d7 e12) - e12
+
+So there are 1+2+4+7+12=26 remainders
+
+
+And we don't evaluate third part
+
+So finaly: 26+7=33 remainder procedure
