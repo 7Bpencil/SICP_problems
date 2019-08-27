@@ -1,0 +1,45 @@
+(define (sum term a next b)
+  (if (> a b)
+      0
+      (+ (term a)
+         (sum term (next a) next b))))
+
+(define (even? x)
+  (= (remainder x 2) 0))
+
+(define (inc x) (+ x 1))
+
+;;-------------------------------------
+
+(define (integral f a b dx)
+  (define (add-dx x) (+ x dx))
+  (* (sum f (+ a (/ dx 2)) add-dx b)
+     dx))
+
+;;-------------------------------------
+
+;;n should be even
+
+(define (simpson-integral f a b n)
+  (define (iter h k)
+    (define (y k)
+      (f (+ a (* k h))))
+    (define (term k)
+      (cond ((or (= k 0) (= k n)) (y k))
+            ((even? k) (* 2 (y k)))
+            (else (* 4 (y k)))))
+    (* (/ h 3)
+       (sum term k inc n)))
+  (iter (/ (- b a) n) 0))
+
+;;-------------------------------------
+
+(define (cube x) (* x x x))
+
+(simpson-integral cube 0 1 100)
+(simpson-integral cube 0 1 1000)
+
+(integral cube 0 1 0.01)
+(integral cube 0 1 0.001)
+
+;;simpson-integral has better accuracy, yeah!
