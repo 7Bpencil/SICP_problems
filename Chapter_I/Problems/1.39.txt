@@ -1,0 +1,28 @@
+;;recursive version
+(define (cont-frac n d k)
+  (define (chain i)
+    (if (= i k)
+        (/ (n i) (d i))
+        (/ (n i)
+           (+ (d i)
+              (chain (+ i 1))))))
+  (chain 1))
+
+;;;;iterative version
+;;(define (cont-frac n d k)
+;;  (define (iter i result)
+;;    (cond ((= i 1) result)
+;;          (else (iter (- i 1) (/ (n i)
+;;                                  (+ (d i)
+;;                                     result))))))
+;;  (iter k (/ (n k) (d k))))
+
+;;------------------------------------------------
+
+(define (tan-cf x k)
+  (define (square x) (* x x))
+  (define (Ni i) (if (= i 1) x (- 0 (square x))))
+  (define (Di i) (- (* 2 i) 1))
+  (cont-frac Ni Di k))
+
+(tan-cf 0.785398163 20)     ;;tg(pi/4) = 1

@@ -1,0 +1,44 @@
+;;recursive version
+(define (cont-frac n d k)
+  (define (chain i)
+    (if (= i k)
+        (/ (n i) (d i))
+        (/ (n i)
+           (+ (d i)
+              (chain (+ i 1))))))
+  (chain 1))
+
+;;;;iterative version
+;;(define (cont-frac n d k)
+;;  (define (iter i result)
+;;    (cond ((= i 1) result)
+;;          (else (iter (- i 1) (/ (n i)
+;;                                  (+ (d i)
+;;                                     result))))))
+;;  (iter k (/ (n k) (d k))))
+
+;;------------------------------------------------
+
+
+(define (Ni i) (+ 1 (- i i)))   ;;it's really bad
+
+(define (Di i)
+  (cond ((or (= (remainder i 3) 1)
+             (= (remainder i 3) 0)
+             (= i 1))
+         1)
+        (else (- i
+                 (/ (- i 2) 3)))))
+
+;;We have two sequences:
+;; Di: 1 2 1 1 4 1 1 6 1 1 8...
+;; i:  1 2 3 4 5 6 7 8 9 10 11..
+;;i noticed that if i=1 Di=1
+;;if i = 4+3n <=> 1+3n (where n is any positive integer), Di=1
+;;if i = 3n, Di=1
+;;if i = 3n+2, Di = i-n
+;;So all this variants I described in Di procedure                 
+
+
+(define e (+ 2 (cont-frac Ni Di 10)))
+e
