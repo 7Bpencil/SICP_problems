@@ -1,0 +1,48 @@
+;;recursive version
+(define (filtered-accumulate filter? combiner null-value term a next b)
+  (cond ((> a b) null-value)
+        ((filter? a) (combiner (term a) (filtered-accumulate filter? combiner null-value term (next a) next b)))
+        (else (combiner null-value (filtered-accumulate filter? combiner null-value term (next a) next b)))))
+      
+      
+;;;;iterative version
+;;(define (filtered-accumulate filter? combiner null-value term a next b)
+;;  (define (iter a result)
+;;    (cond ((> a b) result)
+;;          ((filter? a) (iter (next a) (combiner result (term a))))
+;;          (else (iter (next a) (combiner result null-value)))))
+;;  (iter a null-value))
+
+;;-------------------------------------
+
+a) filter? = prime?
+   combiner = +
+   null-value = 0
+   term = square
+   next = inc
+   
+(define (sum-square-primes a b)
+  (define (square x) (* x x))
+  (define (inc x) (+ x 1))
+  (filtered-accumulate prime? + 0 square a inc b))
+  
+
+b) filter? = mutually-simple??
+   combiner = *
+   null-value = 1
+   term = return
+   next = inc
+   a = 1
+   b = n-1
+   
+   
+(define (product-mutually-simple n)
+  (define (return x) (x))
+  (define (inc x) (+ x 1))
+  (define (gcd a b)
+    (if (= b 0)
+        a 
+        (gcd b (remainder a b))))
+  (define (mutually-simple? x)
+    (= (gcd x n) 1))
+  (filtered-accumulate mutually-simple? * 1 return 1 inc (- n 1)))
